@@ -77,9 +77,9 @@ class Robot : public frc::TimedRobot {
       slopedIntakeMotor.Set(0.0);
     }
 
-    lowerFlywheel.Set(m_operatorController.GetLeftY()*-0.8);
+    lowerFlywheel.Set(m_operatorController.GetLeftY()*-1);
    //if (m_flywheelTop.Set(m_operatorController.GetLeftY()>.1){
-    upperFlywheel.Set(m_operatorController.GetLeftY()*0.8);
+    upperFlywheel.Set(m_operatorController.GetLeftY());
     //m_robotDrive.ArcadeDrive(left_power, right_power);
  // }
   }
