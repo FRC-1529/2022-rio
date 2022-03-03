@@ -61,9 +61,9 @@ class Robot : public frc::TimedRobot {
     //double right_power = 0.8*m_driveControllerRight.GetY();
     //pcmCompressor.EnableDigital();
     
-    if(m_operatorController.GetLeftBumper()) {
+    if(m_operatorController.GetLeftBumper() or m_driveController.GetLeftBumper()) {
       IntakeSolenoidPCM.Set(frc::DoubleSolenoid::Value::kReverse);
-    } else if (m_operatorController.GetRightBumper()) {
+    } else if (m_operatorController.GetRightBumper() or m_driveController.GetRightBumper()) {
       IntakeSolenoidPCM.Set(frc::DoubleSolenoid::Value::kForward);
     }
 
@@ -73,7 +73,7 @@ class Robot : public frc::TimedRobot {
 
     if(m_operatorController.GetAButton()){
       intakeMotor.Set(1);
-     }else if(m_operatorController.GetYButton()){
+     }else if(m_operatorController.GetXButton()){
       intakeMotor.Set(-1);
      }
      else {
