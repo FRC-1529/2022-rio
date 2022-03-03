@@ -19,7 +19,7 @@
  */
 class Robot : public frc::TimedRobot {
   // 3 4 0 1
-  ctre::phoenix::motorcontrol::can::WPI_TalonFX m_frontLeftMotor{3};
+  ctre::phoenix::motorcontrol::can::WPI_TalonFX m_frontLeftMotor{2};
   ctre::phoenix::motorcontrol::can::WPI_TalonFX m_backLeftMotor{4};
   ctre::phoenix::motorcontrol::can::WPI_TalonFX m_frontRightMotor{0};
   ctre::phoenix::motorcontrol::can::WPI_TalonFX m_backRightMotor{1};
@@ -37,7 +37,7 @@ class Robot : public frc::TimedRobot {
   frc::Joystick m_driveControllerBottom{0};
   frc::Joystick m_driveControllerTop{1};
   frc::Compressor pcmCompressor{0, frc::PneumaticsModuleType::CTREPCM}; 
-  frc::DoubleSolenoid IntakeSolenoidPCM{frc::PneumaticsModuleType::CTREPCM, 6, 7};
+  frc::DoubleSolenoid IntakeSolenoidPCM{frc::PneumaticsModuleType::CTREPCM, 0, 1};
   static const int intakeMotorID = 1, slopedIntakeMotorID = 2, lowerFlywheelID = 3, upperFlywheelID = 4;
   rev::CANSparkMax intakeMotor{intakeMotorID, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax slopedIntakeMotor{slopedIntakeMotorID, rev::CANSparkMax::MotorType::kBrushless};
@@ -54,11 +54,12 @@ class Robot : public frc::TimedRobot {
 
   void TeleopPeriodic() override {
     // Drive with tank style
-    m_robotDrive.ArcadeDrive(m_driveController.GetLeftY(), m_driveController.GetRightX()*-1);
+    m_robotDrive.ArcadeDrive(m_driveController.GetLeftY()*0.75, m_driveController.GetRightX()*-0.75);
+    //m_robotDrive.TankDrive(m_driveController.GetLeftY()*0.75, m_driveController.GetRightY()*0.75);
 
     // double left_power = 0.8*m_driveControllerLeft.GetY();
     //double right_power = 0.8*m_driveControllerRight.GetY();
-    pcmCompressor.EnableDigital();
+    //pcmCompressor.EnableDigital();
     
     if(m_operatorController.GetLeftBumper()) {
       IntakeSolenoidPCM.Set(frc::DoubleSolenoid::Value::kReverse);
@@ -66,20 +67,28 @@ class Robot : public frc::TimedRobot {
       IntakeSolenoidPCM.Set(frc::DoubleSolenoid::Value::kForward);
     }
 
+   // const double motor_speed = 0.9;
+    lowerFlywheel.Set(m_operatorController.GetRightTriggerAxis()*-1);
+    upperFlywheel.Set(m_operatorController.GetRightTriggerAxis());
+
     if(m_operatorController.GetAButton()){
       intakeMotor.Set(0.5);
-    } else {
-      intakeMotor.Set(0.0);
-    }
-    if(m_operatorController.GetBButton()){
+     } else {
+       intakeMotor.Set(0.0);
+     }
+    if(m_operatorController.GetBButton())
+      {
       slopedIntakeMotor.Set(0.5);
-    } else{
+      } 
+      else{
       slopedIntakeMotor.Set(0.0);
-    }
+      }
 
-    lowerFlywheel.Set(m_operatorController.GetLeftY()*-1);
+     
+
+   /// lowerFlywheel.Set(m_operatorController.GetLeftY()*-1);
    //if (m_flywheelTop.Set(m_operatorController.GetLeftY()>.1){
-    upperFlywheel.Set(m_operatorController.GetLeftY());
+  ///  upperFlywheel.Set(m_operatorController.GetLeftY());
     //m_robotDrive.ArcadeDrive(left_power, right_power);
  // }
   }
@@ -89,4 +98,4 @@ class Robot : public frc::TimedRobot {
 int main() {
   return frc::StartRobot<Robot>();
 }
-#endif 
+#endif
