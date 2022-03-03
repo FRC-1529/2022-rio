@@ -73,9 +73,12 @@ class Robot : public frc::TimedRobot {
 
     if(m_operatorController.GetAButton()){
       intakeMotor.Set(0.5);
-     } else {
-       intakeMotor.Set(0.0);
+     }else if(m_operatorController.GetYButton()){
+      intakeMotor.Set(-0.5);
      }
+     else {
+       intakeMotor.Set(0.0);
+     }     
     if(m_operatorController.GetBButton())
       {
       slopedIntakeMotor.Set(0.5);
