@@ -72,9 +72,9 @@ class Robot : public frc::TimedRobot {
     upperFlywheel.Set(m_operatorController.GetRightTriggerAxis());
 
     if(m_operatorController.GetAButton()){
-      intakeMotor.Set(0.5);
+      intakeMotor.Set(1);
      }else if(m_operatorController.GetYButton()){
-      intakeMotor.Set(-0.5);
+      intakeMotor.Set(-1);
      }
      else {
        intakeMotor.Set(0.0);
