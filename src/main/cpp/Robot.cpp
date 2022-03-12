@@ -94,8 +94,8 @@ class Robot : public frc::TimedRobot {
       slopedIntakeMotor.Set(0.0);
       }
   //Operates the climb subsystem 
-  ClimbLeft.Set(m_operatorController.GetLeftY()*0.25);
-  ClimbRight.Set(m_operatorController.GetRightY()*-0.25);
+  ClimbLeft.Set(m_operatorController.GetLeftY()*0.4);
+  ClimbRight.Set(m_operatorController.GetRightY()*-0.4);
   
   //Operates the turret
   if (m_operatorController.GetRightTriggerAxis())
